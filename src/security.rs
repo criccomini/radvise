@@ -1,5 +1,5 @@
 // Subset of: https://plaid.com/docs/api/products/#investments-holdings-get-response-securities-type
-enum SecurityType {
+pub enum SecurityType {
     Cash,
     Derivative,
     Equity,
@@ -10,8 +10,9 @@ enum SecurityType {
     Other,
 }
 
-// Wealthfront assett classes: https://research.wealthfront.com/whitepapers/investment-methodology/
-enum WealthfrontAssetClass {
+// Wealthfront asset classes: https://research.wealthfront.com/whitepapers/investment-methodology/
+#[derive(strum_macros::Display)]
+pub enum WealthfrontAssetClass {
     BondsUs,
     BondsUsCorporate,
     BondsUsMuni,
@@ -26,7 +27,7 @@ enum WealthfrontAssetClass {
 }
 
 // Betterment asset classes: https://www.betterment.com/help/core-portfolio-funds
-enum BettermentAssetClass {
+pub enum BettermentAssetClass {
     EquityUs,
     EquityUsLargeCap,
     EquityUsMidCap,
@@ -44,7 +45,7 @@ enum BettermentAssetClass {
 
 pub struct Security {
     pub ticker_symbol: String,
-    pub type: SecurityType,
+    pub r#type: SecurityType,
     // Left as a string to allow arbitrary asset classes
     pub asset_class: Option<String>,
 }

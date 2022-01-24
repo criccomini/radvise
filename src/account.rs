@@ -1,4 +1,5 @@
-enum AccountType {
+#[derive(PartialEq, Eq, Hash)]
+pub enum AccountType {
     Investment,
     Credit,
     Depository,
@@ -7,7 +8,8 @@ enum AccountType {
 }
 
 // Subset of https://plaid.com/docs/api/products/#investments-holdings-get-response-accounts-subtype
-enum AccountSubtype {
+#[derive(PartialEq, Eq, Hash)]
+pub enum AccountSubtype {
     Retirement401k,
     Education529,
     Brokerage,
@@ -19,8 +21,9 @@ enum AccountSubtype {
     Mortgage,
 }
 
+#[derive(PartialEq, Eq, Hash)]
 pub struct Account {
-    pub type: AccountType,
+    pub name: String,
+    pub r#type: AccountType,
     pub subtype: Option<AccountSubtype>,
-    pub holdings: Vec<Holding>,
 }
