@@ -5,7 +5,7 @@ use crate::holding::Holding;
 
 pub struct EngineConfig<'a> {
     balances: HashMap<&'a Account, Vec<&'a Holding>>,
-    targets: HashMap<&'a Account, HashMap<&'a str, Decimal>>,
+    targets: HashMap<&'a Account, &'a HashMap<&'a str, Decimal>>,
 }
 
 impl <'a> EngineConfig<'a> {
@@ -24,7 +24,10 @@ impl <'a> EngineConfig<'a> {
         self
     }
 
-    pub fn set_target(&'a mut self, account: &'a Account, targets: &'a HashMap<&'a str, Decimal>) {
+    pub fn set_target(&'a mut self, account: &'a Account, targets: &'a HashMap<&'a str, Decimal>) -> &'a mut EngineConfig {
+        self.targets
+            .insert(account, targets);
+        self
     }
 
     /*
