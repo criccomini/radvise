@@ -19,24 +19,29 @@ mod tests {
     #[test]
     fn it_works() {
         let mut targets = HashMap::new();
-        targets.insert("VTSAX", dec!(1.0));
+        targets.insert("VTSAX", dec!(.6));
+        targets.insert("VGSLX", dec!(.4));
         let vanguard_brokerage = Account {
-            name: "Vanguard Brokerage".to_string(),
+            name: "Vanguard Brokerage",
             r#type: AccountType::Investment,
             subtype: Some(AccountSubtype::Brokerage),
         };
-        let engine_config = EngineConfig::new()
-            .add_holding(&vanguard_brokerage, &Holding {
-                security: Security {
-                    ticker_symbol: "VTSAX".to_string(),
-                    r#type: SecurityType::MutualFund,
-                    asset_class: Some(WealthfrontAssetClass::EquityUs.to_string()),
-                },
-                quantity: dec!(1.0),
-                purchase_price: dec!(1.0),
-                current_price: dec!(2.0), // TODO probably move this to a separate method .set_price()
-                current_price_as_of: None,
-            })
-            .set_target(&vanguard_brokerage, &targets);
+        let vtsax_holding = Holding {
+            security: Security {
+                ticker_symbol: "VTSAX",
+                r#type: SecurityType::MutualFund,
+                asset_class: Some(WealthfrontAssetClass::EquityUs.to_string()),
+            },
+            quantity: dec!(1.0),
+            purchase_price: dec!(1.0),
+            current_price: dec!(2.0),
+            current_price_as_of: None,
+        };
+        let mut config = EngineConfig::new();
+        let rebalance_transactions = config
+            .add_holding(&vanguard_brokerage, &vtsax_holding)
+            .set_target(&vanguard_brokerage, &targets)
+            .rebalance(&vanguard_brokerage);
+        println!("{:?}", rebalance_transactions)
     }
 }

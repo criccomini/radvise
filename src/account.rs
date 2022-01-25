@@ -22,8 +22,8 @@ pub enum AccountSubtype {
 }
 
 #[derive(PartialEq, Eq, Hash)]
-pub struct Account {
-    pub name: String,
+pub struct Account<'a> {
+    pub name: &'a str,
     pub r#type: AccountType,
     pub subtype: Option<AccountSubtype>,
 }

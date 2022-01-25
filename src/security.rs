@@ -43,8 +43,8 @@ pub enum BettermentAssetClass {
     BondsNonUsEmerging,
 }
 
-pub struct Security {
-    pub ticker_symbol: String,
+pub struct Security<'a> {
+    pub ticker_symbol: &'a str,
     pub r#type: SecurityType,
     // Left as a string to allow arbitrary asset classes
     pub asset_class: Option<String>,
